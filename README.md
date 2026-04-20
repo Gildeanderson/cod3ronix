@@ -1,5 +1,7 @@
 # Cod3ronix - Soluções Digitais 🚀
 
+![Cod3ronix Preview](./preview.png)
+
 Cod3ronix é uma plataforma moderna e disruptiva dedicada a fornecer soluções digitais de alta performance. De produtos digitais a consultorias técnicas, ajudamos marcas a decolarem no mundo digital com tecnologia de ponta e design impecável.
 
 ## 🛠 Tecnologias
