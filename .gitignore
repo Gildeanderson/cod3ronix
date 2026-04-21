@@ -6,3 +6,4 @@ coverage/
 *.log
 .env*
 metadata.json
+test_emailjs.html

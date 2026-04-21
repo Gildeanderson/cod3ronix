@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -13,18 +14,18 @@ export const Contact = () => {
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     setError(null);
-    
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
 
-      if (!response.ok) throw new Error('Falha ao enviar');
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
 
       setSubmitted(true);
       setTimeout(() => setSubmitted(false), 5000);
@@ -62,7 +63,7 @@ export const Contact = () => {
               </div>
               <div>
                 <h4 className="text-white font-bold tracking-tight">WhatsApp</h4>
-                <p className="text-text-s font-medium text-sm">11992582593</p>
+                <p className="text-text-s font-medium text-sm">(11)99258-2593</p>
               </div>
             </div>
           </div>
@@ -70,8 +71,8 @@ export const Contact = () => {
 
         <div className="card-surface p-10 rounded-[2.5rem] glass border-primary/10">
           {submitted ? (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-20"
             >
@@ -89,9 +90,9 @@ export const Contact = () => {
                     <span className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--color-primary)]" />
                     Nome
                   </label>
-                  <input 
+                  <input
                     {...register("name", { required: true })}
-                    className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all font-medium text-sm" 
+                    className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all font-medium text-sm"
                     placeholder="Seu nome"
                   />
                 </div>
@@ -100,15 +101,15 @@ export const Contact = () => {
                     <span className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--color-primary)]" />
                     E-mail
                   </label>
-                  <input 
-                    {...register("email", { 
+                  <input
+                    {...register("email", {
                       required: "E-mail obrigatório",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: "E-mail inválido"
                       }
                     })}
-                    className={`w-full bg-black/40 border ${errors.email ? 'border-red-500' : 'border-white/5'} rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all font-medium text-sm`} 
+                    className={`w-full bg-black/40 border ${errors.email ? 'border-red-500' : 'border-white/5'} rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all font-medium text-sm`}
                     placeholder="E-mail"
                   />
                   {errors.email && <span className="text-[9px] text-red-500 font-bold uppercase tracking-wider">{errors.email.message as string}</span>}
@@ -119,14 +120,14 @@ export const Contact = () => {
                   <span className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_8px_var(--color-primary)]" />
                   Mensagem
                 </label>
-                <textarea 
+                <textarea
                   {...register("message", { required: true })}
-                  className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-4 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all h-32 font-medium text-sm" 
+                  className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-4 text-white focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all h-32 font-medium text-sm"
                   placeholder="Seu projeto..."
                 />
               </div>
               {error && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider">{error}</p>}
-              <button 
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-primary hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 text-white font-black py-4 rounded-xl shadow-xl shadow-primary/20 transition-all text-sm uppercase tracking-widest"

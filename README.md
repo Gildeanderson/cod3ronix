@@ -10,13 +10,13 @@ Cod3ronix é uma plataforma moderna e disruptiva dedicada a fornecer soluções 
 - **Animações**: Motion (Framer Motion)
 - **Backend**: Node.js, Express, TypeScript
 - **Segurança**: Helmet, Express-Rate-Limit, CORS
-- **E-mail**: Resend API
+- **E-mail**: EmailJS (Client-side)
 - **Ícones**: Lucide React
 
 ## 🚀 Funcionalidades
 
 - **Design Premium**: Interface dark mode com estética futurista e responsiva.
-- **Formulário de Contato Inteligente**: Integrado ao backend com proteção contra spam.
+- **Formulário de Contato Inteligente**: Integrado ao EmailJS para recebimento direto.
 - **Lead de Orçamento**: Modal interativo para captação de projetos.
 - **Segurança de Produção**: Configurado com cabeçalhos de segurança e limites de requisição.
 
@@ -41,13 +41,12 @@ Cod3ronix é uma plataforma moderna e disruptiva dedicada a fornecer soluções 
 3. Configure o arquivo `.env`:
    Crie um arquivo `.env` na raiz do projeto com as seguintes chaves:
    ```env
-   PORT=5000
-   ALLOWED_ORIGINS="http://localhost:3000"
-   VITE_API_URL="http://localhost:5000"
-   RESEND_API_KEY="sua_chave_aqui"
+   VITE_EMAILJS_SERVICE_ID="seu_service_id"
+   VITE_EMAILJS_TEMPLATE_ID="seu_template_id"
+   VITE_EMAILJS_PUBLIC_KEY="sua_public_key"
    ```
 
-4. Inicie o projeto (Frontend e Backend simultaneamente):
+4. Inicie o projeto:
    ```bash
    npm start
    ```
