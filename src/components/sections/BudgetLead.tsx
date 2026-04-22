@@ -11,6 +11,15 @@ export const BudgetLead = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(() => {
+      setStep(1);
+      setEmail('');
+      setError(null);
+    }, 300);
+  };
+
   const handleSubmit = async () => {
     if (!email) return;
     setIsSubmitting(true);
@@ -57,7 +66,7 @@ export const BudgetLead = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="absolute inset-0 bg-dark/80 backdrop-blur-md"
             />
             
@@ -69,7 +78,7 @@ export const BudgetLead = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <button 
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className="absolute top-6 right-6 text-text-s hover:text-white transition-colors"
               >
                 <X size={24} />
@@ -143,10 +152,7 @@ export const BudgetLead = () => {
                     Nossa equipe de especialistas entrará em contato em menos de 24 horas. Prepare-se para a decolagem!
                   </p>
                   <button 
-                    onClick={() => {
-                      setIsOpen(false);
-                      setTimeout(() => setStep(1), 500);
-                    }}
+                    onClick={handleClose}
                     className="text-primary font-bold hover:underline"
                   >
                     Fechar
